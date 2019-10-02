@@ -10,7 +10,7 @@
 <h2>Testes</h2>
 
 <h1>Referências</h1>
-<p>Classe LocalShell foi desenvolvida por outra pessoa. Disponível em: <https://www.devmedia.com.br/executando-shell-scripts-utilizando-java/26494></p>
+<p>Classe LocalShell foi desenvolvida por outra pessoa. Disponível em <a href="https://www.devmedia.com.br/executando-shell-scripts-utilizando-java/26494">DevMedia</a></p>
 
 <h1>Autor</h1>
 <p>Aroldo Felix (junioraroldo37@gmail.com)</p>
