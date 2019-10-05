@@ -37,7 +37,7 @@
 <img src="https://user-images.githubusercontent.com/32347176/66260320-9656f200-e793-11e9-96af-0c359d0b5e79.png">
 
 <h3> Teste para inicialização </h3>
-
+<p>Vale salientar que esses testes foram realizados utilizando o ambiente Ubuntu 18.</p>
 <p>Teste utilizando -hash.</p>
 <img src="https://user-images.githubusercontent.com/32347176/66260352-05cce180-e794-11e9-90ac-355e77186bdc.png">
 <p>Arquivo oculto salvando as hash's.</p>
