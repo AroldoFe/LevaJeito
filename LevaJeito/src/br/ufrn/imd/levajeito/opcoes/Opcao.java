@@ -42,7 +42,7 @@ public abstract class Opcao {
 	
 		for(File file: files) {
 			if( file.isDirectory() ) {
-				if(!file.getName().startsWith(".")) {
+				if(!file.getName().startsWith(".guarda")) {
 					listarArquivos(arquivos, file.getAbsolutePath());
 				}
 			}

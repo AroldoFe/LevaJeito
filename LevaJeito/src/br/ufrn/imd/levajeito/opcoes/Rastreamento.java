@@ -67,16 +67,18 @@ public class Rastreamento extends Opcao {
 		Set<String> chavesLidas = lidas.keySet();
 		Set<String> chavesGeradas = geradas.keySet();
 		
+		ArrayList<String> chavesRemover = new ArrayList<String>();
+		
 		// Verificando se todas as hashs lidas estão nas geradas
 		for(String chaveLida: chavesLidas) {
 			if(chavesGeradas.contains(chaveLida)) {
 				if(!lidas.get(chaveLida).equals(geradas.get(chaveLida))) {
-					lidas.put(chaveLida, geradas.get(chaveLida));
 					relatorio.append("* Alterado: " + chaveLida + "\n");
 				}
-				geradas.remove(chaveLida);
+				lidas.put(chaveLida, geradas.get(chaveLida));
+				chavesGeradas.remove(chaveLida);
 			} else {
-				lidas.remove(chaveLida);
+				chavesRemover.add(chaveLida);
 				relatorio.append("- Excluído: " + chaveLida + "\n");
 			}
 		}
@@ -84,7 +86,12 @@ public class Rastreamento extends Opcao {
 		// Verificando se existe alguem que foi gerado, mas não foi lido
 		for(String chaveGerada: chavesGeradas) {
 			lidas.put(chaveGerada, geradas.get(chaveGerada));
-			relatorio.append("+ Inserido: " + chaveGerada);
+			relatorio.append("+ Inserido: " + chaveGerada + "\n");
+		}
+		
+		// Removendo as hashs dos arquivos que foram removidos da pasta
+		for(String remover: chavesRemover) {
+			lidas.remove(remover);
 		}
 		
 		return relatorio.toString();
@@ -96,7 +103,7 @@ public class Rastreamento extends Opcao {
 	@Override
 	public void executar() throws IOException, InvalidPasswordException, InvalidOutputFileException {
 		// Listar os arquivos do diretório
-		ArrayList<String> arquivos = new ArrayList<String>(); 
+		ArrayList<String> arquivos = new ArrayList<String>();
 		super.listarArquivos(arquivos, super.getDiretorio());
 		
 		// Gerar as hash's
@@ -106,17 +113,18 @@ public class Rastreamento extends Opcao {
 		String relatorio = "";
 		if(pastaOcultaExiste() && arquivoHashExiste()) {
 			// Ler o arquivo que guarda as hash's
-			Hashtable<String, String> hahsLidas = pegarHashs();
+			Hashtable<String, String> hashLidas = pegarHashs();
 			
 			// Comparar hash's geradas com as lidas
-			relatorio = compararHashs(hahsLidas, hashsGeradas);
+			relatorio = compararHashs(hashLidas, hashsGeradas);
 			
-			if(relatorio == null || relatorio.equals("")) relatorio = "Não houve alteração na pasta!";
+			if(relatorio == null || relatorio.equals(""))
+				relatorio = "Não houve alteração na pasta!\n";
 			
 			// Salvar as hashs
-			salvarHashs(hahsLidas);
+			salvarHashs(hashLidas);
 		} else {
-			relatorio = "Esta pasta não estava sendo guardada ou não estava sendo rastreada pelo método " + getMetodo() + "!";
+			relatorio = "Esta pasta não estava sendo guardada ou não estava sendo rastreada pelo método " + getMetodo() + "!\n";
 		}
 		
 		// Gerar relatório
